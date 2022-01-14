@@ -1,4 +1,4 @@
-# Terraform Project
+# Terraform Project (Azure)
 ## This is Matt's first Azure project in Terraform!
 This project creates the following resources:
 - Resource Group (tf-rg)
