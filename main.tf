@@ -2,14 +2,22 @@
 
 # Invokes Resource Group module
 module "rg" {
-  source    = "./rg"
+  source    = "./modules/rg"
   base_name = "tfAz"
   location  = "East US"
 }
 
+# Invoke Key Vault module
+module "kv" {
+  source   = "./modules/kv"
+  location = "East US"
+  rgName   = module.rg.rg_name_output
+  rgId     = module.rg.rg_id
+}
+
 # Invokes Virtual Network Module
 module "network" {
-  source    = "./network"
+  source    = "./modules/network"
   base_name = "tfAz"
   location  = "East US"
   rgName    = module.rg.rg_name_output
@@ -20,19 +28,19 @@ module "network" {
 
 # Invokes Virtual Machine Module
 module "vm" {
-  source    = "./vm"
+  source    = "./modules/vm"
   base_name = "tfAz"
   location  = "East US"
   rgName    = module.rg.rg_name_output
   size      = "Standard_DS1_v2"
   uName     = "tf-admin"
-  pWd       = "ChangeMe!9876"
+  pWd       = module.kv.randomKvPassword
   nic       = module.network.nic_output
 }
 
 # Invokes Storage Account Module
 module "stgAcct" {
-  source    = "./stgAcct"
+  source    = "./modules/stgAcct"
   base_name = "tfAz"
   location  = "East US"
   rgName    = module.rg.rg_name_output
