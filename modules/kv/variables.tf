@@ -9,5 +9,5 @@ variable "rgName" {
 }
 
 variable "rgId" {
-    description = "ID of the Resource Group"
+  description = "ID of the Resource Group"
 }
